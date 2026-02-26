@@ -1,6 +1,5 @@
-// MEMORY GAME — p5.js
 
-const totalCards = 20;   // must be even
+const totalCards = 20;   
 const cols = 5;
 const rows = 4;
 
@@ -49,12 +48,11 @@ function buildDeck() {
   tries = 0;
   matches = 0;
 
-  // compute square size
+  // square size
   const gridW = width - pad * 2 - gap * (cols - 1);
   const gridH = (height - headerH) - pad * 2 - gap * (rows - 1);
   const cardSize = min(gridW / cols, gridH / rows);
 
-  // create pair ids: 0..9 twice
   let pairIds = [];
   for (let i = 0; i < totalCards / 2; i++) {
     pairIds.push(i);
@@ -62,7 +60,6 @@ function buildDeck() {
   }
   shuffleArray(pairIds);
 
-  // build grid cards
   let idx = 0;
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
@@ -73,7 +70,7 @@ function buildDeck() {
         x,
         y,
         size: cardSize,
-        id: pairIds[idx],   // which image it matches with
+        id: pairIds[idx],  
         faceUp: false,
         matched: false,
       });
@@ -86,7 +83,7 @@ function buildDeck() {
 }
 
 function draw() {
-  background("#83A24E");
+  background("white");
   drawHeader();
   drawGrid();
   drawWinMessageIfDone();
@@ -120,7 +117,7 @@ function drawGrid() {
   
       // card base
       noStroke();
-      fill('#E8ACAF');
+      fill('#83A24E');
       rect(card.x, card.y, card.size, card.size, 8);
   
       // image inside (smaller than the card)
@@ -134,32 +131,12 @@ function drawGrid() {
   
       // border LAST (on top)
       noFill();
-      stroke('#E8ACAF');
+      stroke('#83A24E');
       strokeWeight(1);
       rect(card.x, card.y, card.size, card.size, 8);
     }
   }
 
-function drawCardBack(card) {
-  // back base
-  fill(245);
-  rect(card.x, card.y, card.size, card.size, 12);
-
-  // cute simple pattern
-  noFill();
-  stroke(140);
-  strokeWeight(2);
-
-  const cx = card.x + card.size / 2;
-  const cy = card.y + card.size / 2;
-
-  circle(cx, cy, card.size * 0.55);
-  circle(cx, cy, card.size * 0.30);
-
-  // tiny sparkle-ish cross
-  line(cx - 12, cy, cx + 12, cy);
-  line(cx, cy - 12, cx, cy + 12);
-}
 
 function mousePressed() {
   if (lockBoard) return;
